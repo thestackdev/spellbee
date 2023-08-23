@@ -2,11 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Encouragement from "./encouragement";
-import Header from "./header";
 import InputIndex from "./input";
 import Hints from "./menu/hints";
 import HowTo from "./menu/howTo";
-import Menu from "./menu/menu";
 import Rankings from "./menu/rankings";
 import Realistic from "./realistic";
 import UserRanking from "./userRanking";
@@ -63,6 +61,21 @@ export const checkLetters = (word: string, letters: string[]): boolean => {
   }
   return true;
 };
+
+const menuItems = [
+  {
+    name: "How to Play",
+    onClickArg: "howTo",
+  },
+  {
+    name: "Rankings",
+    onClickArg: "rankings",
+  },
+  {
+    name: "Today's Hints",
+    onClickArg: "hints",
+  },
+];
 
 export default function GameIndex(props: GameIndexProps) {
   const { data } = props;
@@ -140,18 +153,7 @@ export default function GameIndex(props: GameIndexProps) {
   };
 
   return (
-    <div data-testid="game-index" className={"flex flex-col items-center"}>
-      <Header
-        date={data.displayDate}
-        editor={data.editor}
-        setShowMenu={() => setShowMenuItem("navbar")}
-      />
-      {showMenuItem === "navbar" && (
-        <Menu
-          showMenuItem={showMenuItem}
-          setShowMenuItem={(arg) => setShowMenuItem(arg)}
-        />
-      )}
+    <div data-testid="game-index" className="flex flex-col items-center p-6">
       {showMenuItem === "howTo" && (
         <HowTo setShowMenuItem={(arg) => setShowMenuItem(arg)} />
       )}
@@ -191,6 +193,17 @@ export default function GameIndex(props: GameIndexProps) {
           enterWord={(word) => enterWord(word)}
           outerLetters={data.outerLetters.map((i) => i.toUpperCase())}
         />
+      </div>
+      <div className="flex flex-row gap-4">
+        {menuItems.map((i) => (
+          <button
+            className="p-3 border border-gray-300 rounded-lg"
+            key={i.name}
+            onClick={() => setShowMenuItem(i.onClickArg)}
+          >
+            {i.name}
+          </button>
+        ))}
       </div>
     </div>
   );
