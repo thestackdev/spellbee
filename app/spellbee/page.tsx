@@ -18,3 +18,5 @@ export default async function Home() {
 
   return <GameIndex data={data.yesterday} />;
 }
+
+export const dynamic = "force-dynamic";
