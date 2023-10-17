@@ -3,7 +3,9 @@ import GameIndex from "@/components/index";
 import "./spellbee.module.css";
 
 export default async function Home() {
-  const data = await fetch("https://www.nytimes.com/puzzles/spelling-bee")
+  const data = await fetch(
+    `https://www.nytimes.com/puzzles/spelling-bee?date=${Date.now()}`
+  )
     .then((res) => res.text())
     .then((data) =>
       JSON.parse(
